@@ -5,9 +5,10 @@ window:
   opacity: 0.9
 
 font:
-  size: 7.5
+  size: 12
   normal:
-    family: Roboto mono
+    family: JetBrains Mono
+    # family: Roboto mono
     # style:  medium
 
 colors:
