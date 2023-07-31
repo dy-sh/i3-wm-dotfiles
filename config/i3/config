@@ -1,3 +1,5 @@
+
+
 # Documentation: https://i3wm.org/docs/userguide.html
 # Config created by Keyitdev https://www.github.com/keyitdev/dotfiles
 # Copyright (C) 2022 Keyitdev
@@ -32,6 +34,9 @@ exec_always --no-startup-id battery&
 # start i3 components
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
+
+# keyboard layout
+exec_always --no-startup-id "setxkbmap -model pc104 -layout us,ru -option grp:alt_shift_toggle"
 
 ### Shortcuts ###
 
@@ -124,18 +129,18 @@ bindsym Pause exec screenshot -sa
 bindsym Print exec screenshot -sf
 
 # brightness control
-exec_always --no-startup-id light -I
-bindsym XF86MonBrightnessUp exec light -A 2 && light -O && brightness &
-bindsym XF86MonBrightnessDown exec light -U 2 && light -O && brightness &
+# exec_always --no-startup-id light -I
+# bindsym XF86MonBrightnessUp exec light -A 2 && light -O && brightness &
+# bindsym XF86MonBrightnessDown exec light -U 2 && light -O && brightness &
 
 # brightness control hdmi
 bindsym Ctrl+F7 exec brightness_hdmi down
 bindsym Ctrl+F8 exec brightness_hdmi up
 
 # audio control
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ && volume &
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%- && volume &
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && mute &
+# bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ && volume &
+# bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%- && volume &
+# bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && mute &
 #bindsym XF86AudioMicMute exec --no-startup-id amixer -D pulse sset Master 5%+ && volume &
 
 # turn off screen
@@ -151,8 +156,8 @@ bindsym ctrl + F3 exec amixer set Capture nocap && dunstify -a "Microphone" "Mic
 bindsym ctrl + F4 exec amixer set Capture cap && dunstify -a "Microphone" "Microphone" "Microphone is unmuted" -r 100 -i /usr/local/bin/icons/mic.svg
 
 # toggle touchpad
-bindsym ctrl + F9 exec xinput set-prop $(xinput list | grep -oP 'Touchpad.*id=\K\d+') "Device Enabled" 0 && dunstify -a "Touchpad" "Touchpad" "Touchpad is disabled" -r 100
-bindsym ctrl + F10 exec xinput set-prop $(xinput list | grep -oP 'Touchpad.*id=\K\d+') "Device Enabled" 1 && dunstify -a "Touchpad" "Touchpad" "Touchpad is enabled" -r 100
+bindsym ctrl + F9 exec xinput set-prop 15 "Device Enabled" 0 && dunstify -a "Touchpad" "Touchpad" "Touchpad is disabled" -r 100
+bindsym ctrl + F10 exec xinput set-prop 15 "Device Enabled" 1 && dunstify -a "Touchpad" "Touchpad" "Touchpad is enabled" -r 100
 
 # workspaces names
 set $ws1 "1"
@@ -292,3 +297,21 @@ mode "$mode_gaps_outer" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
+
+
+
+# # Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && mute &
+
+# 
+# # Sreen brightness controls
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
